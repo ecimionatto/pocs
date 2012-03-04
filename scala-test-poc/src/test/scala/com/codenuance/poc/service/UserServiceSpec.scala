@@ -10,16 +10,19 @@ import org.scalatest.junit.JUnitRunner
 @RunWith(classOf[JUnitRunner])
 class UserServiceSpec extends FeatureSpec with GivenWhenThen with ShouldMatchers {
 
-  feature("Customer save customer") {
+  feature("Manager saves customer") {
 
     info("As a store manager")
     info("I want to create customers providing address")
-    info("the future I can send customer coupons")
+    info("so in the future I can send discount coupons")
 
     scenario("create new user and address") {
       given("Given the customer X does not exist")
       var user = new User("Eric Cartman")
-      user.address = new Address("101 Main Street", "South Park", "31222", "CO")
+      val address = new Address("101 Main Street", "South Park", "31222", "CO");
+      user.addAddress(address)
+
+      assert(user.address === address)
 
       when("When manager saves new user X")
       var service = new UserService
@@ -32,7 +35,7 @@ class UserServiceSpec extends FeatureSpec with GivenWhenThen with ShouldMatchers
     scenario("customer exists update address") {
       given("Given the customer X exists")
       var user = new User("Eric Cartman")
-      user.address = new Address("101 Main Street", "South Park", "31222", "CO")
+      user.addAddress(new Address("101 Main Street", "South Park", "31222", "CO"))
       val service = new UserService
       service.save(user)
 
@@ -40,7 +43,7 @@ class UserServiceSpec extends FeatureSpec with GivenWhenThen with ShouldMatchers
       and("And customer a has different address")
       var newAddress = new Address("2002 Ocean Blvd", "South Park", "31222", "CO")
       user = new User("Eric Cartman")
-      user.address = newAddress
+      user.addAddress(newAddress)
       var savedUser = service.save(user)
 
       then("Then update address in the database")
@@ -49,10 +52,22 @@ class UserServiceSpec extends FeatureSpec with GivenWhenThen with ShouldMatchers
 
     scenario("customer exists alert manager") {
       given("Given the customer X exists")
-      when("When manager saves new customer X")
-      then("And customer a has same address")
-      and("""Then return message "User already updated""")
-      pending
+      var user = new User("Eric Cartman")
+      user.addAddress(new Address("2002 Ocean Blvd", "South Park", "31222", "CO"))
+      val service = new UserService
+      service.save(user)
+
+      when("When manager saves customer X")
+      and("And customer a has different address")
+      var newAddress = new Address("2002 Ocean Blvd", "South Park", "31222", "CO")
+      user = new User("Eric Cartman")
+      user.addAddress(newAddress)
+
+      then("""Then return message "User already updated""")
+      intercept[IllegalArgumentException] {
+        user.addAddress(newAddress)
+      }
+
     }
 
   }
