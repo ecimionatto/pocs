@@ -1,20 +1,27 @@
 package com.codenuance.poc.service
 import org.junit.runner.RunWith
 import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.mock.MockitoSugar
 import org.scalatest.FeatureSpec
 import org.scalatest.GivenWhenThen
 import com.codenuance.poc.model.Address
 import com.codenuance.poc.model.User
+import com.codenunace.poc.repo.UserRepo
 import org.scalatest.junit.JUnitRunner
+import org.mockito.Mockito._
 
 @RunWith(classOf[JUnitRunner])
-class UserServiceSpec extends FeatureSpec with GivenWhenThen with ShouldMatchers {
+class UserServiceSpec extends FeatureSpec with MockitoSugar with GivenWhenThen with ShouldMatchers {
 
   feature("Manager saves customer") {
 
     info("As a store manager")
     info("I want to create customers providing address")
     info("so in the future I can send discount coupons")
+
+    val mockUserRepo = mock[UserRepo]
+    var service = new UserService
+    service.userRepo = mockUserRepo
 
     scenario("create new user and address") {
       given("Given the customer X does not exist")
@@ -25,8 +32,8 @@ class UserServiceSpec extends FeatureSpec with GivenWhenThen with ShouldMatchers
       assert(user.address === address)
 
       when("When manager saves new user X")
-      var service = new UserService
       var savedUser = service.save(user)
+      verify(mockUserRepo).save(user)
 
       then("Then create new user in the database")
       savedUser should not equal (null)
@@ -36,7 +43,6 @@ class UserServiceSpec extends FeatureSpec with GivenWhenThen with ShouldMatchers
       given("Given the customer X exists")
       var user = new User("Eric Cartman")
       user.addAddress(new Address("101 Main Street", "South Park", "31222", "CO"))
-      val service = new UserService
       service.save(user)
 
       when("When manager customer X")
@@ -44,9 +50,10 @@ class UserServiceSpec extends FeatureSpec with GivenWhenThen with ShouldMatchers
       var newAddress = new Address("2002 Ocean Blvd", "South Park", "31222", "CO")
       user = new User("Eric Cartman")
       user.addAddress(newAddress)
-      var savedUser = service.save(user)
 
       then("Then update address in the database")
+      var savedUser = service.save(user)
+      verify(mockUserRepo).save(user)
       user.address should be(newAddress)
     }
 
@@ -54,7 +61,6 @@ class UserServiceSpec extends FeatureSpec with GivenWhenThen with ShouldMatchers
       given("Given the customer X exists")
       var user = new User("Eric Cartman")
       user.addAddress(new Address("2002 Ocean Blvd", "South Park", "31222", "CO"))
-      val service = new UserService
       service.save(user)
 
       when("When manager saves customer X")
