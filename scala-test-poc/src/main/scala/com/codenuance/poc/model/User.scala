@@ -1,5 +1,5 @@
 package com.codenuance.poc.model
 
-class User(code: String, name: String, accountType: AccountType, address: Address) {
-
+class User(name: String) {
+  var address: Address = null
 }
