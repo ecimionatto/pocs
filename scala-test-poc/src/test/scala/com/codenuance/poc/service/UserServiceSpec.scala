@@ -1,5 +1,6 @@
 package com.codenuance.poc.service
 import org.junit.runner.RunWith
+import org.mockito.Mockito.verify
 import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.mock.MockitoSugar
 import org.scalatest.FeatureSpec
@@ -8,7 +9,7 @@ import com.codenuance.poc.model.Address
 import com.codenuance.poc.model.User
 import com.codenunace.poc.repo.UserRepo
 import org.scalatest.junit.JUnitRunner
-import org.mockito.Mockito._
+import org.mockito.Mockito
 
 @RunWith(classOf[JUnitRunner])
 class UserServiceSpec extends FeatureSpec with MockitoSugar with GivenWhenThen with ShouldMatchers {
@@ -32,6 +33,7 @@ class UserServiceSpec extends FeatureSpec with MockitoSugar with GivenWhenThen w
       assert(user.address === address)
 
       when("When manager saves new user X")
+
       var savedUser = service.save(user)
       verify(mockUserRepo).save(user)
 
@@ -41,12 +43,14 @@ class UserServiceSpec extends FeatureSpec with MockitoSugar with GivenWhenThen w
 
     scenario("customer exists update address") {
       given("Given the customer X exists")
+      
       var user = new User("Eric Cartman")
       user.addAddress(new Address("101 Main Street", "South Park", "31222", "CO"))
+ 
       service.save(user)
 
-      when("When manager customer X")
-      and("And customer a has different address")
+      when("When manager saves customer X")
+      and("And X has different address")
       var newAddress = new Address("2002 Ocean Blvd", "South Park", "31222", "CO")
       user = new User("Eric Cartman")
       user.addAddress(newAddress)

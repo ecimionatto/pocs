@@ -3,6 +3,6 @@ import com.codenuance.poc.model.User
 
 class UserRepo {
 
-  def save(user: User) = println("user " + user + " persisted")
+  def save(user: User) = println("user saved")
 
 }
