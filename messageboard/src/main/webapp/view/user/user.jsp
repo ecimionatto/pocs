@@ -10,8 +10,8 @@
 		<div>
 			<p>
 				<span>user:</span>
-				<form:input path="user" />
-				<form:errors path="user" />
+				<form:input path="username" />
+				<form:errors path="username" />
 			</p>
 			<p>
 				<span>password:</span>

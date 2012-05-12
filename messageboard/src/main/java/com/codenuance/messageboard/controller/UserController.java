@@ -25,7 +25,7 @@ public class UserController {
 		if (result.hasErrors()) {
 			return "user/user";
 		}
-		return "redirect:/controlpanel/" + user.getUser();
+		return "redirect:/controlpanel/" + user.getUsername();
 	}
 
 }

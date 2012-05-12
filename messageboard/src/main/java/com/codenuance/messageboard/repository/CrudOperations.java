@@ -1,4 +1,4 @@
-package com.codenunace.messageboard.repository;
+package com.codenuance.messageboard.repository;
 
 import java.lang.reflect.ParameterizedType;
 

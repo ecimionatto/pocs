@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.codenuance.messageboard.model.Login;
+
 @Controller
 @RequestMapping(value = "/controlpanel")
 public class ControlPanelController {

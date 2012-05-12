@@ -1,4 +1,4 @@
-package com.codenuance.messageboard.controller;
+package com.codenuance.messageboard.model;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
