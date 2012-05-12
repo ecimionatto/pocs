@@ -1,4 +1,4 @@
-package com.web.poc.controller;
+package com.codenuance.messageboard.controller;
 
 import javax.validation.Valid;
 
@@ -28,13 +28,7 @@ public class LoginController {
 
 	@RequestMapping(value = "register", method = RequestMethod.GET)
 	public String viewRegister() {
-		return "login/registerView";
+		return "redirect:/user";
 	}
 
-	@RequestMapping(value = "/newuser", method = RequestMethod.GET)
-	public @ResponseBody
-	Login getUserWithTag() {
-		return "login/registerView";
-	}
-	
 }
