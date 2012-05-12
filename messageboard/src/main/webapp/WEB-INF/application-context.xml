@@ -55,16 +55,19 @@
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
 
+	<security:global-method-security
+		secured-annotations="enabled" />
+
 	<security:authentication-manager>
 		<security:authentication-provider
 			user-service-ref="userRepository">
 		</security:authentication-provider>
 	</security:authentication-manager>
 
-	<security:http>
-		<security:form-login login-page="/login"
-			login-processing-url="/login" default-target-url="/login"
-			authentication-failure-url="/login?loginError=true" />
+	<security:http disable-url-rewriting="true">
+		<security:access-denied-handler
+			error-page="/login" />
+		<security:form-login login-page="/login" />
 	</security:http>
 
 

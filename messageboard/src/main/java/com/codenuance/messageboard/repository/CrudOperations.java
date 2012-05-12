@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 @Transactional
-public class CrudOperations<T> {
+public class CrudOperations<T> implements CrudOperatable<T> {
 
 	@PersistenceContext
 	private EntityManager entityManager;
@@ -27,31 +27,66 @@ public class CrudOperations<T> {
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.codenuance.messageboard.repository.CrudOperatable#create(T)
+	 */
 	public T create(T entity) {
 		entityManager.persist(entity);
 		entityManager.flush();
 		return entity;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.codenuance.messageboard.repository.CrudOperatable#delete(java.lang
+	 * .String)
+	 */
 	public void delete(String entityId) {
 		entityManager.remove(read(entityId));
 		entityManager.flush();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.codenuance.messageboard.repository.CrudOperatable#delete(T)
+	 */
 	public void delete(T entity) {
 		entityManager.remove(entity);
 		entityManager.flush();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.codenuance.messageboard.repository.CrudOperatable#getEntityManager()
+	 */
 	public EntityManager getEntityManager() {
 		return entityManager;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.codenuance.messageboard.repository.CrudOperatable#read(java.lang.
+	 * String)
+	 */
 	public T read(String id) {
 		assignGenericType();
 		return entityManager.find(entityClass, id);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.codenuance.messageboard.repository.CrudOperatable#update(T)
+	 */
 	public T update(T entity) {
 		T merged = entityManager.merge(entity);
 		entityManager.flush();
