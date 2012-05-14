@@ -58,16 +58,32 @@
 	<security:global-method-security
 		secured-annotations="enabled" />
 
-	<security:authentication-manager>
+	<security:authentication-manager alias="authenticationManager">
 		<security:authentication-provider
 			user-service-ref="userRepository">
 		</security:authentication-provider>
 	</security:authentication-manager>
 
-	<security:http disable-url-rewriting="true">
-		<security:access-denied-handler
-			error-page="/login" />
-		<security:form-login login-page="/login" />
+	<!-- <security:http auto-config="true"> -->
+	<!-- <security:intercept-url pattern="/login" -->
+	<!-- access="IS_AUTHENTICATED_ANONYMOUSLY" /> -->
+	<!-- <security:intercept-url pattern="/user" -->
+	<!-- access="IS_AUTHENTICATED_ANONYMOUSLY" /> -->
+	<!-- <security:intercept-url pattern='/**' access='ROLE_USER' /> -->
+	<!-- <security:form-login login-page='/login' -->
+	<!-- default-target-url="/login" /> -->
+	<!-- <security:logout /> -->
+	<!-- </security:http> -->
+
+
+	<security:http auto-config="true">
+		<security:intercept-url pattern="/user"
+			access="IS_AUTHENTICATED_ANONYMOUSLY" />
+		<security:intercept-url pattern="/"
+			access="IS_AUTHENTICATED_ANONYMOUSLY" />
+		<security:intercept-url pattern="/**" access="ROLE_USER" />
+		<security:logout logout-url="/logout" />
+
 	</security:http>
 
 

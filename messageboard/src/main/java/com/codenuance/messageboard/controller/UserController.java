@@ -15,7 +15,6 @@ import com.codenuance.messageboard.repository.CrudOperatable;
 @Controller
 @RequestMapping(value = "/user")
 public class UserController {
-
 	@Autowired
 	private CrudOperatable<User> userRepository;
 
@@ -34,7 +33,7 @@ public class UserController {
 
 		userRepository.create(user);
 
-		return "redirect:/controlpanel/" + user.getUsername();
+		return "redirect:/controlpanel";
 	}
 
 }

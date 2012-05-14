@@ -4,21 +4,11 @@
 <body>
 	<form:form modelAttribute="login" action="login" method="post">
 		<div>
-			<h2>login</h2>
+			<h3>view messages</h3>
 		</div>
 		<div>
 			<p>
-				<span>user:</span>
-				<form:input path="user" />
-				<form:errors path="user" />
-			</p>
-			<p>
-				<span>password:</span>
-				<form:password path="password" />
-				<form:errors path="password" />
-			</p>
-			<p>
-				<input type="submit" />
+				<a href="controlpanel">messages</a>
 			</p>
 		</div>
 

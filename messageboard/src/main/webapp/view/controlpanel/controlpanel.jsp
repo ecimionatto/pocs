@@ -1,4 +1,5 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <header>
 	<script type="text/javascript"
@@ -8,32 +9,40 @@
 </header>
 
 <body>
-	<form:form modelAttribute="login" action="${login.user}" method="post">
-		<div>
-			<h2>control panel</h2>
-		</div>
-		<div>
+	<div>
+		<p>
+			<a href="logout">logout</a>
+		</p>
+	</div>
+	<div>
+		<a href="message">add message</a>
+	</div>
+	<div>
+		<h2>messages for ${user.username}</h2>
+	</div>
+	<div>
+		<c:forEach items="${user.messages}" var="singleMessage">
 			<p>
-				<span>user:</span>
-				<form:input id="user" path="user" for="user" readonly="true" />
+				<span><c:out value="${singleMessage}" /></span>
 			</p>
-			<p>
-				<input id="jsonButton" type="button" />
-				<script>
-					$.ajaxSetup({
-						scriptCharset : "utf-8",
-						contentType : "application/json; charset=utf-8"
-					});
-					$("#jsonButton").click(function() {
-						$.getJSON("json", {
-							name : $('#login').val()
-						}, function(login) {
-							$("#user").val(login.user);
-						});
-					});
-				</script>
-			</p>
-		</div>
-	</form:form>
+		</c:forEach>
+	</div>
+
+	<p>
+		<input id="jsonButton" type="button" />
+		<script>
+			$.ajaxSetup({
+				scriptCharset : "utf-8",
+				contentType : "application/json; charset=utf-8"
+			});
+			$("#jsonButton").click(function() {
+				$.getJSON("json", {
+					name : $('#login').val()
+				}, function(login) {
+					$("#user").val(login.user);
+				});
+			});
+		</script>
+	</p>
 </body>
 </html>

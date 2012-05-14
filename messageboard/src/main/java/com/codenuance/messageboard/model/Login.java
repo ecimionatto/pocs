@@ -1,31 +1,13 @@
 package com.codenuance.messageboard.model;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
 public class Login {
-	@NotNull
-	@Size(min = 1, max = 25)
-	private String user;
+	private String userMessage;
 
-	@NotNull
-	@Size(min = 1, max = 25)
-	private String password;
-
-	public String getUser() {
-		return user;
+	public String getUserMessage() {
+		return userMessage;
 	}
 
-	public void setUser(String user) {
-		this.user = user;
+	public void setUserMessage(String userMessage) {
+		this.userMessage = userMessage;
 	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String name) {
-		this.password = name;
-	}
-
 }
