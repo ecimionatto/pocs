@@ -1,5 +1,5 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 <header>
 	<script type="text/javascript"
@@ -23,26 +23,14 @@
 	<div>
 		<c:forEach items="${user.messages}" var="singleMessage">
 			<p>
-				<span><c:out value="${singleMessage}" /></span>
+				<span><c:out value="${singleMessage.message}" /></span>
 			</p>
+			<p>
+				<span><c:out value="${singleMessage.timestamp}" /></span>
+			</p>
+			<hr>
 		</c:forEach>
 	</div>
 
-	<p>
-		<input id="jsonButton" type="button" />
-		<script>
-			$.ajaxSetup({
-				scriptCharset : "utf-8",
-				contentType : "application/json; charset=utf-8"
-			});
-			$("#jsonButton").click(function() {
-				$.getJSON("json", {
-					name : $('#login').val()
-				}, function(login) {
-					$("#user").val(login.user);
-				});
-			});
-		</script>
-	</p>
 </body>
 </html>
