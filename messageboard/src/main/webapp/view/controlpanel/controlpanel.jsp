@@ -20,8 +20,8 @@
 	<div>
 		<h2>messages for ${user.username}</h2>
 	</div>
-	<div>
-		<c:forEach items="${user.messages}" var="singleMessage">
+	<div id="messages">
+		<c:forEach items="${user.observedMessages}" var="singleMessage">
 			<p>
 				<span><c:out value="${singleMessage.message}" /></span>
 			</p>

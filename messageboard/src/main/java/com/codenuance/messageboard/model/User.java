@@ -2,6 +2,9 @@ package com.codenuance.messageboard.model;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -9,10 +12,10 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -21,7 +24,8 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-@JsonIgnoreProperties({ "observedUsers", "observingUser", "messages" })
+@JsonIgnoreProperties({ "observedUsers", "observingUsers", "observedMessages",
+		"messages" })
 @Entity
 public class User implements UserDetails {
 
@@ -71,12 +75,12 @@ public class User implements UserDetails {
 		this.observedUsers = observedUsers;
 	}
 
-	public User getObservingUser() {
-		return observingUser;
+	public Set<User> getObservingUsers() {
+		return observingUsers;
 	}
 
-	public void setObservingUser(User observingUser) {
-		this.observingUser = observingUser;
+	public void setObservingUser(Set<User> observingUsers) {
+		this.observingUsers = observingUsers;
 	}
 
 	class GrantedAuthorityCustom implements GrantedAuthority {
@@ -94,7 +98,7 @@ public class User implements UserDetails {
 
 	@OrderBy("timestamp DESC")
 	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	private List<Message> messages;
+	private Set<Message> messages = new HashSet<Message>();
 
 	@NotNull
 	@Size(min = 1, max = 25)
@@ -106,13 +110,19 @@ public class User implements UserDetails {
 	private String username;
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "observingUser", fetch = FetchType.EAGER)
-	private Set<User> observedUsers;
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "observingUsers")
+	private Set<User> observedUsers = new HashSet<User>();
 
 	@JsonIgnore
-	@ManyToOne
-	@JoinColumn(name = "user_parent")
-	private User observingUser;
+	@ManyToMany
+	private Set<User> observingUsers;
+
+	@Transient
+	private ArrayList<Message> observedMessages;
+
+	public void setObservedMessages(ArrayList<Message> observedMessages) {
+		this.observedMessages = observedMessages;
+	}
 
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		ArrayList<GrantedAuthority> arrayList = new ArrayList<GrantedAuthority>();
@@ -144,11 +154,11 @@ public class User implements UserDetails {
 		return true;
 	}
 
-	public List<Message> getMessages() {
+	public Set<Message> getMessages() {
 		return messages;
 	}
 
-	public void setMessages(List<Message> messages) {
+	public void setMessages(Set<Message> messages) {
 		this.messages = messages;
 	}
 
@@ -164,4 +174,28 @@ public class User implements UserDetails {
 		messages.add(message);
 	}
 
+	public List<Message> getObservedMessages() {
+
+		observedMessages = new ArrayList<Message>();
+		for (User observedUser : observedUsers) {
+			observedMessages.addAll(observedUser.getMessages());
+		}
+
+		this.observedMessages.addAll(this.getMessages());
+
+		Comparator<Message> comparator = new Comparator<Message>() {
+			public int compare(Message o1, Message o2) {
+				if (o1.getTimestamp().getTime() > o2.getTimestamp().getTime()) {
+					return 1;
+				} else if (o1.getTimestamp().getTime() < o2.getTimestamp()
+						.getTime()) {
+					return -1;
+				} else {
+					return 0;
+				}
+			}
+		};
+		Collections.sort(this.observedMessages, comparator);
+		return this.observedMessages;
+	}
 }

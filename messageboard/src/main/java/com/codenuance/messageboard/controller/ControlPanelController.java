@@ -31,17 +31,15 @@ public class ControlPanelController {
 		if (user == null) {
 			return "welcome";
 		}
-		user.getMessages();
-		user.getObservedUsers();
-
+		user.getObservedMessages();
 		model.addAttribute("user", user);
-		model.addAllAttributes(user.getMessages());
 		return "controlpanel/controlpanel";
 	}
 
 	@RequestMapping(value = "/searchUsers/{id}", method = RequestMethod.GET)
 	public @ResponseBody
-	User getUserWithTag(@PathVariable String id, Principal principal) {
+	User getUserWithTag(Model model, @PathVariable String id,
+			Principal principal) {
 		User userToBeFollowed = userRepository.read(id);
 		if (userToBeFollowed == null) {
 			return null;
@@ -49,8 +47,12 @@ public class ControlPanelController {
 
 		User principalUser = userRepository.read(principal.getName());
 		principalUser.getObservedUsers().add(userToBeFollowed);
+		userRepository.update(userToBeFollowed);
 
-		User updatedUser = userRepository.update(userToBeFollowed);
+		userToBeFollowed.getObservingUsers().add(principalUser);
+		User updatedUser = userRepository.update(principalUser);
+
+		model.addAllAttributes(updatedUser.getObservedMessages());
 		return updatedUser;
 	}
 
