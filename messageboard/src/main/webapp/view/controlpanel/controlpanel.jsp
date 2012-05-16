@@ -24,7 +24,7 @@
          $('#messages').html(messagesToDisplay);
  	
 		});
-	}, 1000);
+	}, 2500);
 	</script>
 	</head>
 <body>
@@ -40,21 +40,24 @@
 	<div>
 		<a href="message">add message</a>
 	</div>
+	
+	<form:form modelAttribute="user" action="user" method="post">
 	<div>
 		<p>
 			<span>user </span>
-			<input id ="username" type="text"/> 
+			<form:input id="username" path=""/>
 			<input id="jsonButton" type="button" value="follow"/>
 			<div id="followingMessage"></div>
 			<script>
 				$("#jsonButton").click(function() {
-					$.getJSON("controlpanel/searchUsers/"+$('#username').val(), function(user) {
+					$.getJSON("controlpanel/follow/"+$('#username').val(), function(user) {
 						$('#followingMessage').html("you are following " + user.username + " now!");
 					});
 				});
 			</script>
 		</p>
 	</div>
+	</form:form>
 	<hr>
 	<div>
 		<h2>your updated messages ${user.username}</h2>

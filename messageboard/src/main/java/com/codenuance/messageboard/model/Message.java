@@ -11,6 +11,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
 @Entity
 public class Message implements Serializable {
 
@@ -53,6 +55,7 @@ public class Message implements Serializable {
 		return message;
 	}
 
+	@JsonSerialize(using = CustomDateSerializer.class)
 	public Date getTimestamp() {
 		return timestamp;
 	}
@@ -76,7 +79,7 @@ public class Message implements Serializable {
 	public void setMessage(String message) {
 		this.message = message;
 	}
-
+	
 	public void setTimestamp(Date timestamp) {
 		this.timestamp = timestamp;
 	}

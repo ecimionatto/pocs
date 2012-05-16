@@ -185,9 +185,9 @@ public class User implements UserDetails {
 
 		Comparator<Message> comparator = new Comparator<Message>() {
 			public int compare(Message o1, Message o2) {
-				if (o1.getTimestamp().getTime() > o2.getTimestamp().getTime()) {
+				if (o1.getTimestamp().getTime() < o2.getTimestamp().getTime()) {
 					return 1;
-				} else if (o1.getTimestamp().getTime() < o2.getTimestamp()
+				} else if (o1.getTimestamp().getTime() > o2.getTimestamp()
 						.getTime()) {
 					return -1;
 				} else {

@@ -45,7 +45,7 @@ public class ControlPanelController {
 		return "controlpanel/controlpanel";
 	}
 
-	@RequestMapping(value = "/searchUsers/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/follow/{id}", method = RequestMethod.GET)
 	public @ResponseBody
 	User getUserWithTag(Model model, @PathVariable String id,
 			Principal principal) {
@@ -54,11 +54,14 @@ public class ControlPanelController {
 			return null;
 		}
 
-		User principalUser = userRepository.read(principal.getName());
-		principalUser.getObservedUsers().add(userToBeFollowed);
-		userToBeFollowed.getObservingUsers().add(principalUser);
-		User user = userRepository.update(principalUser);
-		user.getObservedMessages();
+		if (!principal.getName().equals(id)) {
+			User principalUser = userRepository.read(principal.getName());
+			principalUser.getObservedUsers().add(userToBeFollowed);
+			userToBeFollowed.getObservingUsers().add(principalUser);
+			User user = userRepository.update(principalUser);
+			user.getObservedMessages();
+		}
+
 		return userToBeFollowed;
 	}
 
