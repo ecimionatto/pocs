@@ -32,17 +32,17 @@ public class UserTest {
 				.getObservedMessages();
 		assertThat(condenseObservedMessages.size(), CoreMatchers.equalTo(6));
 
-		assertThat(condenseObservedMessages.get(0).getMessage(),
-				CoreMatchers.equalTo(MESSAGE1_USER1));
-		assertThat(condenseObservedMessages.get(1).getMessage(),
-				CoreMatchers.equalTo(MESSAGE2_USER1));
-		assertThat(condenseObservedMessages.get(2).getMessage(),
-				CoreMatchers.equalTo(MESSAGE1_USER2));
-		assertThat(condenseObservedMessages.get(3).getMessage(),
-				CoreMatchers.equalTo(MESSAGE2_USER2));
-		assertThat(condenseObservedMessages.get(4).getMessage(),
-				CoreMatchers.equalTo(MESSAGE3_USER2));
 		assertThat(condenseObservedMessages.get(5).getMessage(),
+				CoreMatchers.equalTo(MESSAGE1_USER1));
+		assertThat(condenseObservedMessages.get(4).getMessage(),
+				CoreMatchers.equalTo(MESSAGE2_USER1));
+		assertThat(condenseObservedMessages.get(3).getMessage(),
+				CoreMatchers.equalTo(MESSAGE1_USER2));
+		assertThat(condenseObservedMessages.get(2).getMessage(),
+				CoreMatchers.equalTo(MESSAGE2_USER2));
+		assertThat(condenseObservedMessages.get(1).getMessage(),
+				CoreMatchers.equalTo(MESSAGE3_USER2));
+		assertThat(condenseObservedMessages.get(0).getMessage(),
 				CoreMatchers.equalTo(MESSAGE3_USER1));
 
 	}
