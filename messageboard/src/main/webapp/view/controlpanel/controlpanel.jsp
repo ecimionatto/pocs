@@ -11,7 +11,7 @@
 <body>
 	<div>
 		<p>
-			<a href="logout">logout</a>
+			<a href="welcome">logout</a>
 		</p>
 	</div>
 	<div>
@@ -31,6 +31,33 @@
 			<hr>
 		</c:forEach>
 	</div>
+	<div>
+	<form:form modelAttribute="user" action="${controlpanel/search}" method="get">
+		<div>
+			<h2>search to follow users</h2>
+		</div>
+		<div>
+			<p>
+				<span>user:</span>
+				<form:input id="username" path="username" for="user"/>
+				<input id="jsonButton" type="button" value="follow"/>
+				<div id="followingMessage"></div>
+				<script>
+					$.ajaxSetup({
+						scriptCharset : "utf-8",
+						contentType : "application/json; charset=utf-8"
+					});
+					$("#jsonButton").click(function() {
+						$.getJSON("controlpanel/searchUsers/"+$('#username').val(), function(user) {
+							$('#followingMessage').html("you are following " + user.username + " now!");
+						});
+					});
+				</script>
+			</p>
+		</div>
+	</form:form>
+	</div>
+	
 
 </body>
 </html>

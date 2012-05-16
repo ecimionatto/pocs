@@ -3,24 +3,81 @@ package com.codenuance.messageboard.model;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import lombok.Data;
-
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+@JsonIgnoreProperties({ "observedUsers", "observingUser", "messages" })
 @Entity
-@Data
 public class User implements UserDetails {
+
+	@Override
+	public String toString() {
+		return "User [username=" + username + "]";
+	}
+
+	public Set<User> getObservedUsers() {
+		return observedUsers;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((password == null) ? 0 : password.hashCode());
+		result = prime * result
+				+ ((username == null) ? 0 : username.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		User other = (User) obj;
+		if (password == null) {
+			if (other.password != null)
+				return false;
+		} else if (!password.equals(other.password))
+			return false;
+		if (username == null) {
+			if (other.username != null)
+				return false;
+		} else if (!username.equals(other.username))
+			return false;
+		return true;
+	}
+
+	public void setObservedUsers(Set<User> observedUsers) {
+		this.observedUsers = observedUsers;
+	}
+
+	public User getObservingUser() {
+		return observingUser;
+	}
+
+	public void setObservingUser(User observingUser) {
+		this.observingUser = observingUser;
+	}
 
 	class GrantedAuthorityCustom implements GrantedAuthority {
 
@@ -35,7 +92,7 @@ public class User implements UserDetails {
 
 	private static final long serialVersionUID = -3576369886698606371L;
 
-	@OrderBy ("timestamp DESC")
+	@OrderBy("timestamp DESC")
 	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<Message> messages;
 
@@ -47,6 +104,15 @@ public class User implements UserDetails {
 	@NotNull
 	@Size(min = 1, max = 25)
 	private String username;
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "observingUser", fetch = FetchType.EAGER)
+	private Set<User> observedUsers;
+
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name = "user_parent")
+	private User observingUser;
 
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		ArrayList<GrantedAuthority> arrayList = new ArrayList<GrantedAuthority>();
