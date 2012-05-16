@@ -1,6 +1,7 @@
 package com.codenuance.messageboard.controller;
 
 import java.security.Principal;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.codenuance.messageboard.model.Message;
 import com.codenuance.messageboard.model.User;
 import com.codenuance.messageboard.repository.CrudOperatable;
 
@@ -21,6 +23,13 @@ public class ControlPanelController {
 
 	@Autowired
 	private CrudOperatable<User> userRepository;
+
+	@RequestMapping(value = "messages", method = RequestMethod.GET)
+	public @ResponseBody
+	List<Message> getMessages(Model model, Principal principal) {
+		User user = userRepository.read(principal.getName());
+		return user.getObservedMessages();
+	}
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String getView(Model model, Principal principal) {
@@ -47,13 +56,10 @@ public class ControlPanelController {
 
 		User principalUser = userRepository.read(principal.getName());
 		principalUser.getObservedUsers().add(userToBeFollowed);
-		userRepository.update(userToBeFollowed);
-
 		userToBeFollowed.getObservingUsers().add(principalUser);
-		User updatedUser = userRepository.update(principalUser);
-
-		model.addAllAttributes(updatedUser.getObservedMessages());
-		return updatedUser;
+		User user = userRepository.update(principalUser);
+		user.getObservedMessages();
+		return userToBeFollowed;
 	}
 
 }

@@ -6,6 +6,29 @@
 		src="http://code.jquery.com/jquery-1.7.min.js">
 		
 	</script>
+	
+	<script>
+	$.ajaxSetup({
+		scriptCharset : "utf-8",
+		contentType : "application/json; charset=utf-8"
+	});
+	var refreshId = setInterval(function() {		
+		$.getJSON("controlpanel/messages", function(data) {
+		 
+		 var messagesToDisplay = '';
+		 $.each(data, function(id, message) {
+    		 messagesToDisplay =  messagesToDisplay + '<p> ' + message.user.username + ' says <b>' + message.message + ' </b> @ ' + message.timestamp + '</p><hr>'; 
+   		 });
+	
+	 		
+         $('#messages').html(messagesToDisplay);
+ 	
+		});
+	}, 1000);
+	</script>
+	</head>
+<body>
+	
 </header>
 
 <body>
@@ -18,46 +41,31 @@
 		<a href="message">add message</a>
 	</div>
 	<div>
-		<h2>messages for ${user.username}</h2>
+		<p>
+			<span>user </span>
+			<input id ="username" type="text"/> 
+			<input id="jsonButton" type="button" value="follow"/>
+			<div id="followingMessage"></div>
+			<script>
+				$("#jsonButton").click(function() {
+					$.getJSON("controlpanel/searchUsers/"+$('#username').val(), function(user) {
+						$('#followingMessage').html("you are following " + user.username + " now!");
+					});
+				});
+			</script>
+		</p>
+	</div>
+	<hr>
+	<div>
+		<h2>your updated messages ${user.username}</h2>
 	</div>
 	<div id="messages">
-		<c:forEach items="${user.observedMessages}" var="singleMessage">
-			<p>
-				<span><c:out value="${singleMessage.message}" /></span>
-			</p>
-			<p>
-				<span><c:out value="${singleMessage.timestamp}" /></span>
-			</p>
-			<hr>
-		</c:forEach>
 	</div>
 	<div>
-	<form:form modelAttribute="user" action="${controlpanel/search}" method="get">
-		<div>
-			<h2>search to follow users</h2>
-		</div>
-		<div>
-			<p>
-				<span>user:</span>
-				<form:input id="username" path="username" for="user"/>
-				<input id="jsonButton" type="button" value="follow"/>
-				<div id="followingMessage"></div>
-				<script>
-					$.ajaxSetup({
-						scriptCharset : "utf-8",
-						contentType : "application/json; charset=utf-8"
-					});
-					$("#jsonButton").click(function() {
-						$.getJSON("controlpanel/searchUsers/"+$('#username').val(), function(user) {
-							$('#followingMessage').html("you are following " + user.username + " now!");
-						});
-					});
-				</script>
-			</p>
-		</div>
-	</form:form>
 	</div>
 	
 
 </body>
 </html>
+
+
