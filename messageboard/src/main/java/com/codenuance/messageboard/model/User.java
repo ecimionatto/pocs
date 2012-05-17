@@ -24,7 +24,7 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-@JsonIgnoreProperties({ "observingUsers", "observedMessages", "messages" })
+@JsonIgnoreProperties({ "observingUsers", "observedUsers", "observedMessages", "messages" })
 @Entity
 public class User implements UserDetails {
 

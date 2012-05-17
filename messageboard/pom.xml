@@ -459,6 +459,8 @@
 				<groupId>com.cloudbees</groupId>
 				<artifactId>bees-maven-plugin</artifactId>
 				<configuration>
+					<appid>codenuance/meboard</appid>
+					<environment>dev</environment>
 					<apikey>458BF3713B8C39F5</apikey>
 					<secret>HJCBW/X8/VFFYPDUONS2CXHTH/VWKXB8WXB9DU6BC88=</secret>
 				</configuration>
