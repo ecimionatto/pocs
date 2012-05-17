@@ -1,6 +1,8 @@
 package com.codenuance.messageboard.controller;
 
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,13 @@ public class ControlPanelController {
 		return user.getObservedMessages();
 	}
 
+	@RequestMapping(value = "observedUsers", method = RequestMethod.GET)
+	public @ResponseBody
+	Collection<User> getObservedUSers(Model model, Principal principal) {
+		User user = userRepository.read(principal.getName());
+		return user.getObservedUsers();
+	}
+
 	@RequestMapping(method = RequestMethod.GET)
 	public String getView(Model model, Principal principal) {
 		if (principal == null) {
@@ -47,7 +56,7 @@ public class ControlPanelController {
 
 	@RequestMapping(value = "/follow/{id}", method = RequestMethod.GET)
 	public @ResponseBody
-	User getUserWithTag(Model model, @PathVariable String id,
+	Collection<User> getUserWithTag(Model model, @PathVariable String id,
 			Principal principal) {
 		User userToBeFollowed = userRepository.read(id);
 		if (userToBeFollowed == null) {
@@ -59,10 +68,32 @@ public class ControlPanelController {
 			principalUser.getObservedUsers().add(userToBeFollowed);
 			userToBeFollowed.getObservingUsers().add(principalUser);
 			User user = userRepository.update(principalUser);
-			user.getObservedMessages();
+			return user.getObservedUsers();
+
 		}
 
-		return userToBeFollowed;
+		return new ArrayList<User>();
+	}
+
+	@RequestMapping(value = "/stopFollowing/{id}", method = RequestMethod.GET)
+	public @ResponseBody
+	Collection<User> getStopFollowing(Model model, @PathVariable String id,
+			Principal principal) {
+		User userToBeFollowed = userRepository.read(id);
+		if (userToBeFollowed == null) {
+			return null;
+		}
+
+		if (!principal.getName().equals(id)) {
+			User principalUser = userRepository.read(principal.getName());
+			principalUser.getObservedUsers().remove(userToBeFollowed);
+			userToBeFollowed.getObservingUsers().remove(principalUser);
+			User user = userRepository.update(principalUser);
+			return user.getObservedUsers();
+
+		}
+
+		return new ArrayList<User>();
 	}
 
 }

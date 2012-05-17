@@ -20,21 +20,21 @@
 	<bean
 		class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
 
-<!-- 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" -->
-<!-- 		destroy-method="close"> -->
-<!-- 		<property name="driverClass" value="org.h2.Driver" /> -->
-<!-- 		<property name="jdbcUrl" value="jdbc:h2:~/test" /> -->
-<!-- 		<property name="user" value="" /> -->
-<!-- 		<property name="password" value="" /> -->
-<!-- 	</bean> -->
-
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
 		destroy-method="close">
-		<property name="driverClass" value="com.mysql.jdbc.Driver" />
-		<property name="jdbcUrl" value="jdbc:mysql://localhost/messageboard" />
-		<property name="user" value="root" />
+		<property name="driverClass" value="org.h2.Driver" />
+		<property name="jdbcUrl" value="jdbc:h2:~/test" />
+		<property name="user" value="" />
 		<property name="password" value="" />
 	</bean>
+
+<!-- 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" -->
+<!-- 		destroy-method="close"> -->
+<!-- 		<property name="driverClass" value="com.mysql.jdbc.Driver" /> -->
+<!-- 		<property name="jdbcUrl" value="jdbc:mysql://localhost/messageboard" /> -->
+<!-- 		<property name="user" value="root" /> -->
+<!-- 		<property name="password" value="" /> -->
+<!-- 	</bean> -->
 
 	<bean id="entityManagerFactory"
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
