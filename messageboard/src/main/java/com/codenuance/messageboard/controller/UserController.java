@@ -35,7 +35,7 @@ public class UserController {
 
 		userRepository.create(user);
 
-		return "redirect:/controlpanel";
+		return "redirect:/welcome";
 	}
 
 }

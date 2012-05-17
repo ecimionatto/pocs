@@ -10,6 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 
@@ -22,6 +23,7 @@ public class Message implements Serializable {
 	private String id = UUID.randomUUID().toString();
 
 	@NotNull
+	@Size(min = 1, max = 140)
 	private String message;
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -79,7 +81,7 @@ public class Message implements Serializable {
 	public void setMessage(String message) {
 		this.message = message;
 	}
-	
+
 	public void setTimestamp(Date timestamp) {
 		this.timestamp = timestamp;
 	}

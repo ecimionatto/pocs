@@ -8,13 +8,13 @@
 			<h2>create you new post</h2>
 		</div>
 		<div>
+			<span>what's up? </span>
 			<p>
-				<span>message:</span>
-				<form:input path="message" />
+				<form:textarea path="message" rows="2" cols="30" />
 				<form:errors path="message" />
 			</p>
 			<p>
-				<input type="submit" />
+				<input type="submit" value="post message"/>
 			</p>
 		</div>
 	</form:form>

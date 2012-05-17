@@ -35,7 +35,7 @@
 			var messagesToDisplay = '';
 			$.each(data, function(id, user) {
 				messagesToDisplay = messagesToDisplay + '<p> you are following <b>' 
-				+ user.username + '</b> <a href="/controlpanel/stopFollowing/' + user.username+ '">stop following</a> </p>';
+				+ user.username + '</b> <a href="controlpanel/stopFollowing/' + user.username+ '">stop following</a> </p>';
 			});
 
 			$('#followingMessage').html(messagesToDisplay);
@@ -71,7 +71,7 @@
 								var messagesToDisplay = '';
 								$.each(data, function(id, user) {
 									messagesToDisplay = messagesToDisplay + '<p> you are following <b>' 
-									+ user.username + '</b> <a href="/controlpanel/stopFollowing/' + user.username+ '">stop following</a> </p>';
+									+ user.username + '</b> <a href="controlpanel/stopFollowing/' + user.username+ '">stop following</a> </p>';
 								});
 
 								$('#followingMessage').html(messagesToDisplay);

@@ -24,29 +24,51 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-@JsonIgnoreProperties({ "observingUsers", "observedMessages",
-		"messages" })
+@JsonIgnoreProperties({ "observingUsers", "observedMessages", "messages" })
 @Entity
 public class User implements UserDetails {
 
-	@Override
-	public String toString() {
-		return "User [username=" + username + "]";
+	class GrantedAuthorityCustom implements GrantedAuthority {
+
+		private static final String ROLE_USER = "ROLE_USER";
+		private static final long serialVersionUID = 3456648447846886316L;
+
+		public String getAuthority() {
+			return ROLE_USER;
+		}
+
 	}
 
-	public Set<User> getObservedUsers() {
-		return observedUsers;
-	}
+	private static final long serialVersionUID = -3576369886698606371L;
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result
-				+ ((password == null) ? 0 : password.hashCode());
-		result = prime * result
-				+ ((username == null) ? 0 : username.hashCode());
-		return result;
+	@OrderBy("timestamp DESC")
+	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private Set<Message> messages = new HashSet<Message>();
+
+	private String name;
+
+	@Transient
+	private ArrayList<Message> observedMessages = new ArrayList<Message>();
+
+	@JsonIgnore
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "observingUsers")
+	private Set<User> observedUsers = new HashSet<User>();
+
+	@JsonIgnore
+	@ManyToMany
+	private Set<User> observingUsers = new HashSet<User>();
+
+	@NotNull
+	@Size(min = 1, max = 25)
+	private String password;
+
+	@Id
+	@NotNull
+	@Size(min = 1, max = 25)
+	private String username;
+
+	public void addMessage(Message message) {
+		messages.add(message);
 	}
 
 	@Override
@@ -71,107 +93,18 @@ public class User implements UserDetails {
 		return true;
 	}
 
-	public void setObservedUsers(Set<User> observedUsers) {
-		this.observedUsers = observedUsers;
-	}
-
-	public Set<User> getObservingUsers() {
-		return observingUsers;
-	}
-
-	public void setObservingUser(Set<User> observingUsers) {
-		this.observingUsers = observingUsers;
-	}
-
-	class GrantedAuthorityCustom implements GrantedAuthority {
-
-		private static final String ROLE_USER = "ROLE_USER";
-		private static final long serialVersionUID = 3456648447846886316L;
-
-		public String getAuthority() {
-			return ROLE_USER;
-		}
-
-	}
-
-	private static final long serialVersionUID = -3576369886698606371L;
-
-	@OrderBy("timestamp DESC")
-	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	private Set<Message> messages = new HashSet<Message>();
-
-	@NotNull
-	@Size(min = 1, max = 25)
-	private String password;
-
-	@Id
-	@NotNull
-	@Size(min = 1, max = 25)
-	private String username;
-
-	@JsonIgnore
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "observingUsers")
-	private Set<User> observedUsers = new HashSet<User>();
-
-	@JsonIgnore
-	@ManyToMany
-	private Set<User> observingUsers;
-
-	@Transient
-	private ArrayList<Message> observedMessages;
-
-	public void setObservedMessages(ArrayList<Message> observedMessages) {
-		this.observedMessages = observedMessages;
-	}
-
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		ArrayList<GrantedAuthority> arrayList = new ArrayList<GrantedAuthority>();
 		arrayList.add(new GrantedAuthorityCustom());
 		return arrayList;
 	}
 
-	public String getPassword() {
-		return password;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public boolean isAccountNonExpired() {
-		return true;
-	}
-
-	public boolean isAccountNonLocked() {
-		return true;
-	}
-
-	public boolean isCredentialsNonExpired() {
-		return true;
-	}
-
-	public boolean isEnabled() {
-		return true;
-	}
-
 	public Set<Message> getMessages() {
 		return messages;
 	}
 
-	public void setMessages(Set<Message> messages) {
-		this.messages = messages;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public void addMessage(Message message) {
-		messages.add(message);
+	public String getName() {
+		return name;
 	}
 
 	public List<Message> getObservedMessages() {
@@ -197,5 +130,81 @@ public class User implements UserDetails {
 		};
 		Collections.sort(this.observedMessages, comparator);
 		return this.observedMessages;
+	}
+
+	public Set<User> getObservedUsers() {
+		return observedUsers;
+	}
+
+	public Set<User> getObservingUsers() {
+		return observingUsers;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((password == null) ? 0 : password.hashCode());
+		result = prime * result
+				+ ((username == null) ? 0 : username.hashCode());
+		return result;
+	}
+
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+
+	public boolean isEnabled() {
+		return true;
+	}
+
+	public void setMessages(Set<Message> messages) {
+		this.messages = messages;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setObservedMessages(ArrayList<Message> observedMessages) {
+		this.observedMessages = observedMessages;
+	}
+
+	public void setObservedUsers(Set<User> observedUsers) {
+		this.observedUsers = observedUsers;
+	}
+
+	public void setObservingUser(Set<User> observingUsers) {
+		this.observingUsers = observingUsers;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	@Override
+	public String toString() {
+		return "User [username=" + username + "]";
 	}
 }

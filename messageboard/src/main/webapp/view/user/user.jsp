@@ -9,9 +9,14 @@
 		</div>
 		<div>
 			<p>
-				<span>user:</span>
+				<span>username:</span>
 				<form:input path="username" />
 				<form:errors path="username" />
+			</p>
+			<p>
+				<span>name:</span>
+				<form:input path="name" />
+				<form:errors path="name" />
 			</p>
 			<p>
 				<span>password:</span>

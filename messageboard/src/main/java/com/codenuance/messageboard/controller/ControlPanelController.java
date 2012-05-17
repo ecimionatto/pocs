@@ -76,24 +76,19 @@ public class ControlPanelController {
 	}
 
 	@RequestMapping(value = "/stopFollowing/{id}", method = RequestMethod.GET)
-	public @ResponseBody
-	Collection<User> getStopFollowing(Model model, @PathVariable String id,
-			Principal principal) {
+	public String stopFollowing(Model model, @PathVariable String id, Principal principal) {
 		User userToBeFollowed = userRepository.read(id);
-		if (userToBeFollowed == null) {
-			return null;
+		User principalUser = userRepository.read(principal.getName());
+		if (userToBeFollowed != null) {
+			if (!principal.getName().equals(id)) {
+				principalUser.getObservedUsers().remove(userToBeFollowed);
+				userToBeFollowed.getObservingUsers().remove(principalUser);
+				userRepository.update(principalUser);
+			}
 		}
-
-		if (!principal.getName().equals(id)) {
-			User principalUser = userRepository.read(principal.getName());
-			principalUser.getObservedUsers().remove(userToBeFollowed);
-			userToBeFollowed.getObservingUsers().remove(principalUser);
-			User user = userRepository.update(principalUser);
-			return user.getObservedUsers();
-
-		}
-
-		return new ArrayList<User>();
+		principalUser.getObservedMessages();
+		model.addAttribute(principalUser);
+		return "redirect:/controlpanel";
 	}
 
 }

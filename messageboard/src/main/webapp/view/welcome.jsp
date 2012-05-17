@@ -1,17 +1,17 @@
 <html>
 <body>
-	<h2>welcome to messageboard</h2>
+	<h2>welcome to meboard</h2>
 
 	<div>
 		<p>
-			<h3>see messages</h3><a href="controlpanel">messages</a>
+			<span>see my <a href="controlpanel">messages</a></span>
 		</p>
 
 	</div>
 
 	<div>
 		<p>
-			<h3>new user register</h3><a href="user">register</a>
+			<span><a href="user">register new user</a><span>
 		</p>
 
 
