@@ -455,6 +455,27 @@
 				<artifactId>tomcat-maven-plugin</artifactId>
 				<version>1.1</version>
 			</plugin>
+			<plugin>
+				<groupId>com.cloudbees</groupId>
+				<artifactId>bees-maven-plugin</artifactId>
+				<configuration>
+					<apikey>458BF3713B8C39F5</apikey>
+					<secret>HJCBW/X8/VFFYPDUONS2CXHTH/VWKXB8WXB9DU6BC88=</secret>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
+
+	<pluginRepositories>
+		<pluginRepository>
+			<id>bees-plugins-snapshots</id>
+			<url>http://repository-cloudbees.forge.cloudbees.com/public-snapshot/</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</pluginRepository>
+	</pluginRepositories>
 </project>
