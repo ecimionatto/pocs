@@ -13,9 +13,9 @@
 		<p>
 			<span><a href="user">register new user</a><span>
 		</p>
-
-
 	</div>
+
+	<p><i>* designed for firefox or safari</i></p>
 
 </body>
 </html>
