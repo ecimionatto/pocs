@@ -458,6 +458,7 @@
 			<plugin>
 				<groupId>com.cloudbees</groupId>
 				<artifactId>bees-maven-plugin</artifactId>
+				<version>1.0-SNAPSHOT</version>
 				<configuration>
 					<appid>codenuance/kodeego</appid>
 					<environment>dev</environment>
@@ -467,7 +468,6 @@
 			</plugin>
 		</plugins>
 	</build>
-
 	<pluginRepositories>
 		<pluginRepository>
 			<id>bees-plugins-snapshots</id>

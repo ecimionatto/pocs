@@ -2,7 +2,6 @@ package com.codenuance.kodeego.model;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -11,20 +10,27 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @Entity
 @Data
+@EqualsAndHashCode(of = { "type" })
+@ToString(exclude = { "codes", "subtypes", "supertypes" })
 public class CodeType {
 
 	@Id
-	private String id = UUID.randomUUID().toString();
+	private String type;
 
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "superType")
-	private Set<CodeType> subtype = new HashSet<CodeType>();
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "supertypes")
+	private Set<CodeType> subtypes = new HashSet<CodeType>();
 
 	@ManyToMany
-	private Set<CodeType> superType = new HashSet<CodeType>();
+	private Set<CodeType> supertypes = new HashSet<CodeType>();
 
-	private String description;
+	private String comments;
+
+	@ManyToMany
+	private Set<Code> codes = new HashSet<Code>();
 
 }

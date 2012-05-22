@@ -9,7 +9,7 @@
 	</div>
 	<div>
 		<p>
-			<span><a href="/code">submit new code</span>
+			<span><a href="code">submit new code</span>
 		</p>
 	</div>
 	</body>

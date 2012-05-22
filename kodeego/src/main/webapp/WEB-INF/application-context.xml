@@ -28,13 +28,13 @@
 		<property name="password" value="" />
 	</bean>
 
-<!-- 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" -->
-<!-- 		destroy-method="close"> -->
-<!-- 		<property name="driverClass" value="com.mysql.jdbc.Driver" /> -->
-<!-- 		<property name="jdbcUrl" value="jdbc:mysql://localhost/kodeego" /> -->
-<!-- 		<property name="user" value="root" /> -->
-<!-- 		<property name="password" value="" /> -->
-<!-- 	</bean> -->
+	<!-- <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" -->
+	<!-- destroy-method="close"> -->
+	<!-- <property name="driverClass" value="com.mysql.jdbc.Driver" /> -->
+	<!-- <property name="jdbcUrl" value="jdbc:mysql://localhost/kodeego" /> -->
+	<!-- <property name="user" value="root" /> -->
+	<!-- <property name="password" value="" /> -->
+	<!-- </bean> -->
 
 	<bean id="entityManagerFactory"
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
@@ -72,27 +72,8 @@
 		</security:authentication-provider>
 	</security:authentication-manager>
 
-	<!-- <security:http auto-config="true"> -->
-	<!-- <security:intercept-url pattern="/login" -->
-	<!-- access="IS_AUTHENTICATED_ANONYMOUSLY" /> -->
-	<!-- <security:intercept-url pattern="/user" -->
-	<!-- access="IS_AUTHENTICATED_ANONYMOUSLY" /> -->
-	<!-- <security:intercept-url pattern='/**' access='ROLE_USER' /> -->
-	<!-- <security:form-login login-page='/login' -->
-	<!-- default-target-url="/login" /> -->
-	<!-- <security:logout /> -->
-	<!-- </security:http> -->
-
-
-	<security:http auto-config="true">
-		<security:intercept-url pattern="/search"
-			access="IS_AUTHENTICATED_ANONYMOUSLY" />
-		<security:intercept-url pattern="/"
-			access="IS_AUTHENTICATED_ANONYMOUSLY" />
-		<security:intercept-url pattern="/**" access="ROLE_USER" />
-		<security:logout logout-url="/welcome" />
-
+	<security:http>
+		<security:http-basic />
 	</security:http>
-
 
 </beans>

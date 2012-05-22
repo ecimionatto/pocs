@@ -13,7 +13,8 @@ public class SearchController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String main(Model model) {
-		return "serach/search";
+		return "search/search";
 	}
-
+	
+	
 }
