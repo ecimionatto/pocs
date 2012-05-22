@@ -1,4 +1,4 @@
-package com.codenuance.messageboard.controller;
+package com.codenuance.kodeego.controller;
 
 import java.security.Principal;
 
@@ -7,7 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.codenuance.messageboard.model.Login;
+import com.codenuance.kodeego.model.Login;
 
 @Controller
 @RequestMapping(value = "/login")

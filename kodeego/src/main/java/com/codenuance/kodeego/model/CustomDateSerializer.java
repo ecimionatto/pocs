@@ -1,4 +1,4 @@
-package com.codenuance.messageboard.model;
+package com.codenuance.kodeego.model;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;

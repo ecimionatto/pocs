@@ -7,6 +7,9 @@ import java.util.List;
 import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 
+import com.codenuance.kodeego.model.Message;
+import com.codenuance.kodeego.model.User;
+
 public class UserTest {
 
 	private static final String MESSAGE3_USER1 = "message3-user1";

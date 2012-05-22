@@ -1,4 +1,4 @@
-package com.codenuance.messageboard.repository;
+package com.codenuance.kodeego.repository;
 
 import javax.persistence.EntityManager;
 

@@ -1,4 +1,4 @@
-package com.codenuance.messageboard.repository;
+package com.codenuance.kodeego.repository;
 
 import java.lang.reflect.ParameterizedType;
 
@@ -30,7 +30,7 @@ public class CrudOperations<T> implements CrudOperatable<T> {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.codenuance.messageboard.repository.CrudOperatable#create(T)
+	 * @see com.codenuance.kodeego.repository.CrudOperatable#create(T)
 	 */
 	public T create(T entity) {
 		entityManager.persist(entity);
@@ -42,7 +42,7 @@ public class CrudOperations<T> implements CrudOperatable<T> {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * com.codenuance.messageboard.repository.CrudOperatable#delete(java.lang
+	 * com.codenuance.kodeego.repository.CrudOperatable#delete(java.lang
 	 * .String)
 	 */
 	public void delete(String entityId) {
@@ -53,7 +53,7 @@ public class CrudOperations<T> implements CrudOperatable<T> {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.codenuance.messageboard.repository.CrudOperatable#delete(T)
+	 * @see com.codenuance.kodeego.repository.CrudOperatable#delete(T)
 	 */
 	public void delete(T entity) {
 		entityManager.remove(entity);
@@ -64,7 +64,7 @@ public class CrudOperations<T> implements CrudOperatable<T> {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * com.codenuance.messageboard.repository.CrudOperatable#getEntityManager()
+	 * com.codenuance.kodeego.repository.CrudOperatable#getEntityManager()
 	 */
 	public EntityManager getEntityManager() {
 		return entityManager;
@@ -74,7 +74,7 @@ public class CrudOperations<T> implements CrudOperatable<T> {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * com.codenuance.messageboard.repository.CrudOperatable#read(java.lang.
+	 * com.codenuance.kodeego.repository.CrudOperatable#read(java.lang.
 	 * String)
 	 */
 	public T read(String id) {
@@ -85,7 +85,7 @@ public class CrudOperations<T> implements CrudOperatable<T> {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.codenuance.messageboard.repository.CrudOperatable#update(T)
+	 * @see com.codenuance.kodeego.repository.CrudOperatable#update(T)
 	 */
 	public T update(T entity) {
 		T merged = entityManager.merge(entity);

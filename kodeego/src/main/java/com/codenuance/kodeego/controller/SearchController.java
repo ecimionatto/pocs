@@ -1,4 +1,4 @@
-package com.codenuance.messageboard.controller;
+package com.codenuance.kodeego.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;

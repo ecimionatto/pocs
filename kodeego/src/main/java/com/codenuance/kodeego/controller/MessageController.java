@@ -1,4 +1,4 @@
-package com.codenuance.messageboard.controller;
+package com.codenuance.kodeego.controller;
 
 import java.security.Principal;
 
@@ -12,9 +12,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.codenuance.messageboard.model.Message;
-import com.codenuance.messageboard.model.User;
-import com.codenuance.messageboard.repository.CrudOperatable;
+import com.codenuance.kodeego.model.Message;
+import com.codenuance.kodeego.model.User;
+import com.codenuance.kodeego.repository.CrudOperatable;
 
 @Controller
 @Transactional

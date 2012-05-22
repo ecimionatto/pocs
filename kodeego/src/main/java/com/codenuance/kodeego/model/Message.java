@@ -1,4 +1,4 @@
-package com.codenuance.messageboard.model;
+package com.codenuance.kodeego.model;
 
 import java.io.Serializable;
 import java.util.Date;
