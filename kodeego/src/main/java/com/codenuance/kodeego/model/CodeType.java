@@ -13,8 +13,11 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
 @Entity
 @Data
+@JsonIgnoreProperties({ "codes", "subtypes", "supertypes" })
 @EqualsAndHashCode(of = { "type" })
 @ToString(exclude = { "codes", "subtypes", "supertypes" })
 public class CodeType {
