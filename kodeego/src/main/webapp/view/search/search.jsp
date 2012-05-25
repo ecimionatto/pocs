@@ -1,39 +1,20 @@
 <html>
-<head>
-<link
-	href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css"
-	rel="stylesheet" type="text/css" />
-<script
-	src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
-<script
-	src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
-
-<script>
-	$.ajaxSetup({
-		scriptCharset : "utf-8",
-		contentType : "application/json; charset=utf-8"
-	});
-
-	var alltypes = "[";
-	$(function getAllTypes() {
-		$.get("search/getAllTypes", function(data) {
-			var items = [];
-			$.each(data, function(key, val) {
-				items.push(val.type);
-			});
-			$("#types").autocomplete({
-				source : items
-			});
-		});
-	});
-</script>
-
-</head>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script type="text/javascript" src="js/jquery.tokeninput.js"></script>
+<link rel="stylesheet" href="css/token-input.css" type="text/css" />
+<link rel="stylesheet" href="css/token-input-facebook.css"
+	type="text/css" />
 <body>
 	<div>
 		<p>
-			<span>search for code</span><input id="types" /><a
+			<span>search for code</span><input type="text" id="types" /><a
 				href="code/searchCodeByType">search</a>
+				        <script type="text/javascript">
+        $(document).ready(function() {
+            $("#types").tokenInput("search/getAllTypes");
+        });
+        </script>
+				
 		</p>
 	</div>
 	<div>

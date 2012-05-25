@@ -1,5 +1,6 @@
 package com.codenuance.kodeego.controller;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,10 +27,47 @@ public class SearchController {
 		return "search/search";
 	}
 
+	class CodeTypeTo {
+		public CodeTypeTo() {
+		}
+
+		CodeTypeTo(String id, String name) {
+			this.id = id;
+			this.name = name;
+		}
+
+		public String getId() {
+			return id;
+		}
+
+		public void setId(String id) {
+			this.id = id;
+		}
+
+		public String getName() {
+			return name;
+		}
+
+		public void setName(String name) {
+			this.name = name;
+		}
+
+		private String id;
+		private String name;
+	}
+
 	@RequestMapping(value = "getAllTypes", method = RequestMethod.GET)
 	public @ResponseBody
-	Collection<CodeType> getAllTypes() {
-		return codeRepository.findAllCodeTypes();
+	Collection<CodeTypeTo> getAllTypes() {
+		Collection<CodeType> findAllCodeTypes = codeRepository
+				.findAllCodeTypes();
+
+		ArrayList<CodeTypeTo> arrayList = new ArrayList<CodeTypeTo>();
+		for (CodeType code : findAllCodeTypes) {
+			arrayList.add(new CodeTypeTo(code.getType(), code.getType()));
+		}
+
+		return arrayList;
 	}
 
 }

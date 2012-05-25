@@ -17,7 +17,7 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 @Entity
 @Data
-@JsonIgnoreProperties({ "codes", "subtypes", "supertypes" })
+@JsonIgnoreProperties({ "codes", "subtypes", "supertypes", "comments" })
 @EqualsAndHashCode(of = { "type" })
 @ToString(exclude = { "codes", "subtypes", "supertypes" })
 public class CodeType {
