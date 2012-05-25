@@ -9,4 +9,6 @@ public interface CodeRepository extends CrudOperatable<Code> {
 	CodeType findCodeType(String codeType);
 
 	Collection<CodeType> findAllCodeTypes();
+
+	Collection<Code> findByCodeType(Collection<String> types);
 }

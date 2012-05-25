@@ -11,16 +11,23 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQuery;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
 @Entity
 @Data
+@JsonIgnoreProperties({ "types" })
 @EqualsAndHashCode(exclude = { "types" })
 @ToString(exclude = { "types" })
+@NamedQuery(name = Code.FIND_BY_TYPES, query = "select distinct c from Code as c inner join c.types t where t.type in :types")
 public class Code {
+
+	public static final String FIND_BY_TYPES = "findCodeByTypes";
 
 	@Id
 	private String id = UUID.randomUUID().toString();

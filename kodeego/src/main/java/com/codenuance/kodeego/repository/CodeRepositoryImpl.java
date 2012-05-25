@@ -22,4 +22,13 @@ public class CodeRepositoryImpl extends CrudOperations<Code> implements
 				"from CodeType", CodeType.class);
 		return query.getResultList();
 	}
+
+	public Collection<Code> findByCodeType(Collection<String> types) {
+
+		TypedQuery<Code> query = getEntityManager().createNamedQuery(
+				Code.FIND_BY_TYPES, Code.class);
+		query.setParameter("types", types);
+
+		return query.getResultList();
+	}
 }
