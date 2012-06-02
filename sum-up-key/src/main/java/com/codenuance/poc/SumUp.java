@@ -1,12 +1,15 @@
 package com.codenuance.poc;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 public class SumUp {
 
 	private List<String> originalData;
+	private Map<String, Integer> parsedData;
 
 	public List<String> getOriginalData() {
 		return originalData;
@@ -17,7 +20,7 @@ public class SumUp {
 	}
 
 	public Map<String, Integer> sum() {
-		Map<String, Integer> parsedData = new HashMap<String, Integer>();
+		parsedData = new LinkedHashMap<String, Integer>();
 		for (String record : originalData) {
 			String[] split = record.split(",");
 			String key = split[0];
@@ -30,6 +33,15 @@ public class SumUp {
 			}
 		}
 		return parsedData;
+	}
+
+	public void printSum() {
+		Set<Entry<String, Integer>> entrySet = this.parsedData.entrySet();
+		for (Entry<String, Integer> entry : entrySet) {
+			System.out.printf("The total for %1s is %2s. ", entry.getKey(),
+					entry.getValue());
+		}
+
 	}
 
 }
