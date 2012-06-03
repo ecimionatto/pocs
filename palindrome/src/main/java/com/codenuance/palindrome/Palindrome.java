@@ -3,11 +3,12 @@ package com.codenuance.palindrome;
 public class Palindrome {
 
 	public boolean check(String word) {
-		word = word.replaceAll("[^A-Za-z0-9w]", "");
-		word = word.toLowerCase();
+		String cleanedWord = word.replaceAll("[^A-Za-z0-9w]", "");
+		cleanedWord = cleanedWord.toLowerCase();
 
-		for (int i = 0; i < word.length(); i++) {
-			if (word.charAt(i) != word.charAt(word.length() - (i + 1))) {
+		for (int i = 0; i < cleanedWord.length(); i++) {
+			char oppositeCharacter = cleanedWord.charAt(cleanedWord.length() - (i + 1));
+			if (cleanedWord.charAt(i) != oppositeCharacter) {
 				return false;
 			}
 		}

@@ -7,19 +7,19 @@ import org.junit.Test;
 public class PalindromeTest {
 
 	@Test
-	public void shouldCheckTest_ReturnsFalse() {
+	public void shouldCheckAndReturnsFalse() {
 		Palindrome palindrome = new Palindrome();
 		assertFalse(palindrome.check("test"));
 	}
 
 	@Test
-	public void shouldCheckAh_Satan_sees_Natasha_Returnstrue() {
+	public void shouldCheckAhSatanseesNatashaAndReturnstrue() {
 		Palindrome palindrome = new Palindrome();
 		assertTrue(palindrome.check("Ah, Satan sees Natasha"));
 	}
 
 	@Test
-	public void shouldCheckAh_Pop_Returnstrue() {
+	public void shouldCheckAhPopAndReturnstrue() {
 		Palindrome palindrome = new Palindrome();
 		assertTrue(palindrome.check("pop"));
 	}
