@@ -1,6 +1,8 @@
 package com.codenuance.kodeego.repository;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.TypedQuery;
 
@@ -29,6 +31,31 @@ public class CodeRepositoryImpl extends CrudOperations<Code> implements
 				Code.FIND_BY_TYPES, Code.class);
 		query.setParameter("types", types);
 
-		return query.getResultList();
+		List<Code> resultList = query.getResultList();
+		ArrayList<Code> filteredCodes = new ArrayList<Code>();
+		for (Code code : resultList) {
+			boolean allTypesPresent = true;
+			for (String type : types) {
+				if (!isCodeTypeAssigned(code, type)) {
+					allTypesPresent = false;
+					break;
+				}
+			}
+			if (allTypesPresent) {
+				filteredCodes.add(code);
+			}
+		}
+
+		return filteredCodes;
 	}
+
+	private boolean isCodeTypeAssigned(Code code, String type) {
+		for (CodeType codeType : code.getTypes()) {
+			if (type.equals(codeType.getType())) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 }

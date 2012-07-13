@@ -87,12 +87,13 @@ public class CodeRepositoryTest extends RepositoryIntegrationTest {
 		
 		ArrayList<String> arrayList = new ArrayList<String>();
 		arrayList.add(codeType1.getType());
+		arrayList.add(codeType2.getType());
 		arrayList.add(codeType3.getType());
 		
 		Collection<Code> codes = codeRepository.findByCodeType(arrayList);
 
-		assertThat(codes.size(), CoreMatchers.equalTo(2));
-		assertThat(codes, JUnitMatchers.hasItems(code1, code2));
+		assertThat(codes.size(), CoreMatchers.equalTo(1));
+		assertThat(codes, JUnitMatchers.hasItems(code1));
 
 	}
 
