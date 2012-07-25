@@ -1,0 +1,12 @@
+@(devices: List[DeviceTo], deviceForm: Form[String]) @import helper._
+
+@main("Device list") {
+
+<h1>Add a new task</h1>
+
+@form(action = routes.DeviceController.newDevice) {
+@inputText(deviceForm("name"))
+
+<input type="submit" value="Create">
+
+} }
