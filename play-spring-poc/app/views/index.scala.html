@@ -1,6 +1,14 @@
 @(devices: List[DeviceTo], deviceForm: Form[String]) @import helper._
-
+@import helper._
 @main("Device list") {
+
+<h1>@devices.size device(s)</h1>
+
+<ul> 
+@devices.map { device =>
+  <li>@device.id - @device.name</li>
+} 
+</ul>
 
 <h1>Add a new task</h1>
 

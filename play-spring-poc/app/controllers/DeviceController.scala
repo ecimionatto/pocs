@@ -25,7 +25,7 @@ object DeviceController extends Controller {
 
   def mapDevicesToDeviceTos(devices: java.util.Collection[Device]): Set[DeviceTo] = {
     var deviceSet = devices.toSet[Device]
-    deviceSet.map((d: Device) => new DeviceTo(d.getMdi(), "")): Set[DeviceTo]
+    deviceSet.map((d: Device) => new DeviceTo(d.getMdi(), d.getName())): Set[DeviceTo]
   }
 
   def devices = Action {

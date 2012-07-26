@@ -5,25 +5,33 @@ import play.api._
 import service.SpringContext
 import com.opeak.poc.repository.DeviceRepository
 import play.api.libs.json.Json._
+import play.api.libs.json.JsValue
 
 object JsonController extends Controller {
 
-  val deviceRepository = SpringContext.applicationContext.getBean("deviceRepository").asInstanceOf[DeviceRepository]
+  var deviceRepository = SpringContext.applicationContext.getBean("deviceRepository").asInstanceOf[DeviceRepository]
+
+  def getJsonDeviceFromRepository(id: String): JsValue = {
+    val device = deviceRepository.findById(id)
+    var jsonObject = {
+
+      if (device != null) {
+        return toJson(
+          Map(
+            "device" ->
+              toJson(
+                Map(
+                  "mdi" -> toJson(device.getMdi()),
+                  "name" -> toJson(device.getName())))))
+      } else {
+        return toJson("")
+      }
+    }
+    return jsonObject
+  }
 
   def getDevice(deviceId: String) = Action {
-    val device = deviceRepository.findById(deviceId)
-    if (device != null) {
-
-      val jsonObject = toJson(
-        Map(
-          "device" ->
-            toJson(
-              Map(
-                "mdi" -> toJson(device.getMdi()),
-                "name" -> toJson(device.getName())))))
-      Ok(toJson(jsonObject))
-
-    } else NoContent
+    Ok(toJson(getJsonDeviceFromRepository(deviceId)))
   }
 
 }
