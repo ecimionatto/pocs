@@ -10,7 +10,10 @@ object ApplicationBuild extends Build {
   val appDependencies = Seq(
     "com.opeak.poc" %
       "simple-spring-jpa" %
-      "0.0.1-SNAPSHOT")
+      "0.0.1-SNAPSHOT",
+    "org.mockito" %
+      "mockito-all" %
+      "1.9.0")
 
   val main = PlayProject(appName, appVersion, appDependencies, mainLang = SCALA).settings(
     resolvers += (

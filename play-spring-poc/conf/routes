@@ -9,7 +9,10 @@ GET     /                           controllers.DeviceController.devices
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
 
                         
-# Tasks          
+# Devices          
 GET     /device                  controllers.DeviceController.devices
 POST    /device                  controllers.DeviceController.newDevice
 
+
+#Json
+GET 	/json/:deviceId			controllers.JsonController.getDevice(deviceId: String)
