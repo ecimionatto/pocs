@@ -13,7 +13,13 @@ object ApplicationBuild extends Build {
       "0.0.1-SNAPSHOT",
     "org.mockito" %
       "mockito-all" %
-      "1.9.0")
+      "1.9.0",
+    "com.sun.jersey" %
+      "jersey-bundle" %
+      "1.9.1",
+    "com.sun.xml.bind" %
+      "jaxb-impl" %
+      "2.2.5-b10")
 
   val main = PlayProject(appName, appVersion, appDependencies, mainLang = SCALA).settings(
     resolvers += (

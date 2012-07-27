@@ -16,3 +16,9 @@ POST    /device                  controllers.DeviceController.newDevice
 
 #Json
 GET 	/json/:deviceId			controllers.JsonController.getDevice(deviceId: String)
+GET 	/json					controllers.JsonController.getAll
+
+#xml
+POST 	/xml					controllers.XmlController.createDevice
+GET 	/xml/:id				controllers.XmlController.getDevice(id: String)
+GET 	/xml					controllers.XmlController.getAll
