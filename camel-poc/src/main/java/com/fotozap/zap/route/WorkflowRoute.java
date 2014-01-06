@@ -1,4 +1,4 @@
-package com.fotozap.zap.route;
+package foo;
 
 import org.springframework.stereotype.Component;
 
